@@ -5,6 +5,8 @@
   "description": "Sistema de entrevista e admissão do Grupo Real Serv",
   "scripts": {
     "dev": "next dev",
+    "setup": "tsx scripts/setup.ts",
+    "db:init": "prisma migrate deploy && tsx prisma/seed.ts",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",

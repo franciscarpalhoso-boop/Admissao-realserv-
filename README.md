@@ -59,20 +59,31 @@ da LGPD.
 # 1. Dependências
 npm install
 
-# 2. Configuração
-cp .env.example .env
-# Gere os dois segredos e cole no .env:
-openssl rand -base64 32   # AUTH_SECRET
-openssl rand -base64 32   # ENCRYPTION_KEY
-# Ajuste também DATABASE_URL e APP_URL.
+# 2. Configuração — cria o .env e gera os segredos sozinho
+npm run setup
+# Ele avisa o que falta preencher à mão (DATABASE_URL, e APP_URL em produção).
+# Rodar de novo é seguro: segredo já preenchido nunca é sobrescrito.
 
-# 3. Banco de dados
-npx prisma migrate deploy    # cria as tabelas
-npm run seed                 # empresas, funções, escalas, checklist e usuários
+# 3. Banco de dados — migrações + cadastros mestres e usuários
+npm run db:init
 
 # 4. Subir
 npm run dev                  # http://localhost:3000
 ```
+
+<details>
+<summary>Fazer os passos 2 e 3 à mão</summary>
+
+```bash
+cp .env.example .env
+openssl rand -base64 32   # cole em AUTH_SECRET
+openssl rand -base64 32   # cole em ENCRYPTION_KEY
+# ajuste DATABASE_URL e APP_URL
+
+npx prisma migrate deploy
+npm run seed
+```
+</details>
 
 O seed cria três usuários para o primeiro acesso — **troque as senhas assim que entrar**,
 em *Cadastros → Usuários*. Para definir outras senhas já no seed, preencha `SENHA_ADMIN`,
@@ -93,6 +104,8 @@ as da tabela). Rodar o seed de novo não altera a senha de quem já existe:
 
 | Comando | O que faz |
 | --- | --- |
+| `npm run setup` | Cria o `.env` e gera os segredos (idempotente) |
+| `npm run db:init` | Aplica as migrações e roda o seed |
 | `npm run dev` | Servidor de desenvolvimento |
 | `npm run build` | Build de produção |
 | `npm start` | Sobe o build de produção |
@@ -121,7 +134,9 @@ Todas estão documentadas em [`.env.example`](.env.example). As essenciais:
 | `DIAS_VALIDADE_LINK` | não | Validade do link do candidato (padrão 30 dias). |
 
 > **`ENCRYPTION_KEY` não pode ser trocada depois** sem reprocessar os dados: os CPFs e RGs
-> já cifrados ficariam ilegíveis. Guarde-a junto com o backup do banco.
+> já cifrados ficariam ilegíveis. Guarde-a junto com o backup do banco. Por isso o
+> `npm run setup` nunca sobrescreve uma chave existente — se encontrar uma inválida, ele
+> para com erro em vez de gerar outra por conta própria.
 
 ### Storage
 
@@ -310,6 +325,9 @@ src/
     retencao.ts           anonimização da LGPD
     exportacao.ts         planilha do eSocial
     pdf/                  ficha, dossiê e o motor de layout
+scripts/
+  setup.ts                prepara o .env e gera os segredos
+  env-arquivo.ts          leitura/escrita do .env em funções puras
 tests/                    regras críticas
 ```
 
@@ -321,7 +339,7 @@ tests/                    regras críticas
 npm test
 ```
 
-54 testes cobrindo as regras que não podem quebrar:
+72 testes cobrindo as regras que não podem quebrar:
 
 - **`validacao.test.ts`** — dígitos verificadores de CPF, CNPJ e PIS, sequências repetidas,
   máscaras e normalização de telefone para o `wa.me`.
@@ -334,6 +352,8 @@ npm test
   ciclo de cifrar/decifrar dos dados sensíveis.
 - **`seed.test.ts`** — garante que os usuários iniciais nunca sejam criados com senha em
   branco quando as variáveis do `.env.example` vêm vazias.
+- **`setup.test.ts`** — leitura e escrita do `.env` sem corromper o arquivo, validação da
+  chave AES-256 e o round-trip de valores base64 (que contêm `+`, `/` e `=`).
 
 ---
 
