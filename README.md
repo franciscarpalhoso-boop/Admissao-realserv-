@@ -75,7 +75,9 @@ npm run dev                  # http://localhost:3000
 ```
 
 O seed cria três usuários para o primeiro acesso — **troque as senhas assim que entrar**,
-em *Cadastros → Usuários*:
+em *Cadastros → Usuários*. Para definir outras senhas já no seed, preencha `SENHA_ADMIN`,
+`SENHA_RECRUTADOR` e `SENHA_DP` no `.env` (mínimo de 8 caracteres; deixadas em branco, valem
+as da tabela). Rodar o seed de novo não altera a senha de quem já existe:
 
 | Perfil | E-mail | Senha inicial |
 | --- | --- | --- |
@@ -319,7 +321,7 @@ tests/                    regras críticas
 npm test
 ```
 
-48 testes cobrindo as regras que não podem quebrar:
+54 testes cobrindo as regras que não podem quebrar:
 
 - **`validacao.test.ts`** — dígitos verificadores de CPF, CNPJ e PIS, sequências repetidas,
   máscaras e normalização de telefone para o `wa.me`.
@@ -330,6 +332,8 @@ npm test
   limites de 6/7 e 14/15 anos; e o bloqueio da admissão com documento pendente.
 - **`formato.test.ts`** — datas em dd/mm/aaaa sem deslocamento de fuso, moeda em R$ e o
   ciclo de cifrar/decifrar dos dados sensíveis.
+- **`seed.test.ts`** — garante que os usuários iniciais nunca sejam criados com senha em
+  branco quando as variáveis do `.env.example` vêm vazias.
 
 ---
 

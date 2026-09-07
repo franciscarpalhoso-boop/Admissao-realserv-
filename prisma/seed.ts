@@ -169,13 +169,29 @@ async function main() {
   }
 
   console.log('Criando usuários iniciais...');
+
+  /**
+   * Lê a senha da variável de ambiente. Uma variável vazia (como vem no
+   * .env.example) conta como "não informada" e cai no padrão — usar `??` aqui
+   * criaria os usuários com senha em branco. Senha curta é erro, não aviso.
+   */
+  function senhaInicial(variavel: string, padrao: string): string {
+    const bruta = (process.env[variavel] ?? '').trim();
+    if (bruta === '') return padrao;
+    if (bruta.length < 8) {
+      throw new Error(`${variavel} deve ter pelo menos 8 caracteres (recebeu ${bruta.length}).`);
+    }
+    return bruta;
+  }
+
   const usuarios = [
-    { nome: 'Administrador do Sistema', email: 'admin@realserv.com.br', perfil: 'ADMIN' as const, senha: process.env.SENHA_ADMIN ?? 'Admin@2024' },
-    { nome: 'Usuário Recrutamento', email: 'recrutador@realserv.com.br', perfil: 'RECRUTADOR' as const, senha: process.env.SENHA_RECRUTADOR ?? 'Recruta@2024' },
-    { nome: 'Usuário DP', email: 'dp@realserv.com.br', perfil: 'DP' as const, senha: process.env.SENHA_DP ?? 'Pessoal@2024' },
+    { nome: 'Administrador do Sistema', email: 'admin@realserv.com.br', perfil: 'ADMIN' as const, senha: senhaInicial('SENHA_ADMIN', 'Admin@2024') },
+    { nome: 'Usuário Recrutamento', email: 'recrutador@realserv.com.br', perfil: 'RECRUTADOR' as const, senha: senhaInicial('SENHA_RECRUTADOR', 'Recruta@2024') },
+    { nome: 'Usuário DP', email: 'dp@realserv.com.br', perfil: 'DP' as const, senha: senhaInicial('SENHA_DP', 'Pessoal@2024') },
   ];
 
   for (const usuario of usuarios) {
+    const existente = await prisma.usuario.findUnique({ where: { email: usuario.email } });
     await prisma.usuario.upsert({
       where: { email: usuario.email },
       update: { nome: usuario.nome, perfil: usuario.perfil },
@@ -186,7 +202,12 @@ async function main() {
         senhaHash: await bcrypt.hash(usuario.senha, 10),
       },
     });
-    console.log(`  ${usuario.email} / ${usuario.senha}`);
+    // A senha do usuário que já existia não é alterada — não faz sentido exibi-la.
+    console.log(
+      existente
+        ? `  ${usuario.email} (já existia, senha mantida)`
+        : `  ${usuario.email} / ${usuario.senha}`,
+    );
   }
 
   console.log('\nSeed concluído. Troque as senhas no primeiro acesso.');

@@ -24,7 +24,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.699.0",
     "@aws-sdk/s3-request-presigner": "^3.699.0",
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.19.3",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "exceljs": "^4.4.0",
@@ -47,6 +47,6 @@
     "tailwindcss": "^3.4.17",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^3.2.7"
   }
 }
