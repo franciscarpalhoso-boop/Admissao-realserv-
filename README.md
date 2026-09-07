@@ -1,142 +1,353 @@
-# PROMPT PARA O CLAUDE CODE: SISTEMA DE ENTREVISTA E ADMISSÃO DO GRUPO REAL SERV
+# Sistema de Entrevista e Admissão — Grupo Real Serv
 
-## Contexto
+Substitui o processo em papel de recrutamento e admissão do Grupo Real Serv: o candidato
+preenche a Ficha de Solicitação de Emprego e envia os documentos pelo celular, por um link
+recebido no WhatsApp; o Departamento Pessoal confere tudo em um painel; e o dossiê de
+admissão sai em um único PDF, pronto para arquivar ou mandar para a contabilidade.
 
-Você vai construir um sistema web completo de recrutamento, entrevista e admissão para o Grupo Real Serv, grupo brasileiro de serviços de condomínios e facilities (portaria, controle de acesso, zeladoria, limpeza, copeira, auxiliar de escritório, manobrista, recepcionista), com sede em Santos/SP. O grupo tem oito empresas (CNPJs distintos): Real Serv First, Second, Fourth, Fifth, Sixth, Seventh, Eighth e Ninth. Os funcionários são contratados pela CLT e alocados em postos de trabalho (condomínios clientes), em escalas 5x1, 6x1 ou 12x36.
+A especificação original está em [`docs/ESPECIFICACAO.md`](docs/ESPECIFICACAO.md).
 
-Hoje o processo é feito em papel: o candidato preenche à mão uma “Ficha de Solicitação de Emprego” de 4 páginas, entrega currículo e cópias de documentos, o entrevistador anota observações à mão no currículo e o RH monta um dossiê físico numerado (ex.: “ADM 01/09” = primeira admissão de setembro). O sistema deve substituir integralmente esse fluxo, reproduzindo todos os campos da ficha em papel e reunindo os documentos digitalizados.
+---
 
-## Requisitos essenciais (prioridade máxima)
+## Índice
 
-Estes três pontos são o núcleo do sistema e devem funcionar antes de qualquer outra coisa:
+- [O que já está pronto](#o-que-já-está-pronto)
+- [Instalação](#instalação)
+- [Variáveis de ambiente](#variáveis-de-ambiente)
+- [Deploy](#deploy)
+- [Guia rápido para o RH](#guia-rápido-para-o-rh)
+- [Decisões de arquitetura](#decisões-de-arquitetura)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Testes](#testes)
+- [Limitações conhecidas](#limitações-conhecidas)
 
-1. O candidato preenche a ficha e anexa todos os documentos online, pelo celular, por meio de um link público enviado por WhatsApp (sem precisar criar conta).
-1. O Departamento Pessoal entra no sistema com login e senha e vê, em um painel, todos os candidatos, a ficha preenchida e os documentos anexados.
-1. Com um clique, o DP baixa um PDF único do candidato contendo a ficha completa mais todos os documentos anexados, na ordem do checklist, pronto para arquivar ou enviar à contabilidade.
+---
 
-## Stack sugerida
+## O que já está pronto
 
-Use Next.js (App Router) + TypeScript + Prisma + PostgreSQL, com Tailwind e shadcn/ui no front. Upload de arquivos em storage S3-compatível (aceite variável de ambiente para AWS S3, Cloudflare R2 ou MinIO local). Autenticação com NextAuth (e-mail/senha) e controle de acesso por perfil. Se julgar outra stack claramente melhor para o caso, justifique antes de começar. Todo o sistema deve ser em português do Brasil, com datas em dd/mm/aaaa, moeda em R$ e máscaras de CPF, CEP, telefone e PIS.
+Os três requisitos essenciais funcionam de ponta a ponta:
 
-## Perfis de usuário
+1. **Link público por WhatsApp** — o candidato abre o link no celular, preenche a ficha em
+   8 etapas com salvamento parcial, assina o termo no dedo e anexa os documentos pela câmera.
+   Não precisa criar conta.
+2. **Painel do Departamento Pessoal** — login por e-mail e senha, kanban do pipeline, lista
+   com busca e filtros, e uma página de detalhe do candidato com as abas Ficha, Documentos,
+   Entrevista, Informações Internas e Histórico.
+3. **PDF único em um clique** — o botão *Baixar dossiê* gera capa, índice, a ficha completa
+   e todos os documentos anexados, na ordem do checklist.
 
-1. Administrador (Diretoria/RH): acesso total, cadastros mestres, relatórios, exclusão.
-1. Recrutador/Entrevistador: cria vagas, agenda e conduz entrevistas, preenche a avaliação, movimenta o candidato no pipeline.
-1. Departamento Pessoal: conferência de documentos, preenchimento das informações internas, geração da ficha em PDF e exportação para a contabilidade.
-1. Candidato: acessa apenas por link público com token (sem cadastro), preenche a ficha e envia documentos pelo celular.
+Além disso: entrevista com roteiro e notas, numeração `ADM nn/mm`, exportação em xlsx/csv no
+layout do eSocial, relatórios, cadastros mestres, log de auditoria e rotina de anonimização
+da LGPD.
 
-## Cadastros mestres
+| Etapa da especificação | Situação |
+| --- | --- |
+| 1. Login e painel de candidatos | Pronto |
+| 2. Link público, ficha e documentos pelo celular | Pronto |
+| 3. Tela do DP e PDF único | Pronto |
+| 4. Entrevista e pipeline | Pronto |
+| 5. Informações internas, ADM e exportação | Pronto |
+| 6. Relatórios, LGPD e testes | Pronto |
 
-- Empresas do grupo (nome, CNPJ, endereço, responsável).
-- Postos de trabalho (nome do condomínio, endereço, cidade, empresa contratante, supervisor responsável).
-- Funções (controlador de acesso, porteiro, zelador, auxiliar de limpeza, copeira, auxiliar de escritório, manobrista, recepcionista), cada uma com requisitos configuráveis (ex.: manobrista exige CNH válida; portaria exige sapato preto).
-- Escalas (5x1, 6x1, 12x36, com horários).
-- Supervisores.
-- Checklist de documentos admissionais configurável (ver lista abaixo).
+---
 
-## Pipeline do candidato (kanban + lista)
+## Instalação
 
-Etapas, com data/hora e usuário responsável em cada mudança:
+**Pré-requisitos:** Node.js 20+ e PostgreSQL 14+.
 
-1. Cadastro/Triagem (currículo recebido)
-1. Entrevista agendada
-1. Entrevistado (aguardando decisão)
-1. Aprovado (aguardando documentação)
-1. Documentação em conferência
-1. Exame admissional
-1. Admitido (gera número sequencial “ADM nn/mm” por mês)
-1. Reprovado / Desistiu / Banco de talentos
+```bash
+# 1. Dependências
+npm install
 
-Cada candidato tem uma página de detalhe com abas: Ficha, Documentos, Entrevista, Informações Internas, Histórico.
+# 2. Configuração
+cp .env.example .env
+# Gere os dois segredos e cole no .env:
+openssl rand -base64 32   # AUTH_SECRET
+openssl rand -base64 32   # ENCRYPTION_KEY
+# Ajuste também DATABASE_URL e APP_URL.
 
-## Ficha de Solicitação de Emprego (formulário do candidato)
+# 3. Banco de dados
+npx prisma migrate deploy    # cria as tabelas
+npm run seed                 # empresas, funções, escalas, checklist e usuários
 
-Reproduza exatamente os campos da ficha em papel, em etapas (wizard) responsivo para celular, com salvamento parcial:
+# 4. Subir
+npm run dev                  # http://localhost:3000
+```
 
-Etapa 1, Dados pessoais: nome completo; telefones de contato; celular (WhatsApp); vaga pretendida (select de funções); tempo de experiência na vaga; naturalidade; data de nascimento; estado civil; nome do cônjuge; endereço (rua, número, complemento, bairro, cidade, UF, CEP com busca automática via ViaCEP); tempo de residência; escolaridade; nome da mãe; nome do pai; e-mail.
+O seed cria três usuários para o primeiro acesso — **troque as senhas assim que entrar**,
+em *Cadastros → Usuários*:
 
-Etapa 2, Documentação: CPF (validar dígitos); nº PIS/NIT; RG, data de emissão e órgão expedidor/UF; CNH (número, nº de registro, UF, data de emissão, validade, categoria, data da 1ª habilitação); CTPS (número e série, ou indicação de CTPS digital); título de eleitor (inscrição, zona, seção); certificado militar/reservista (número); tipo sanguíneo; quantidade de filhos e, para cada filho, nome, data de nascimento e CPF (usados para salário-família e IR).
+| Perfil | E-mail | Senha inicial |
+| --- | --- | --- |
+| Administrador | `admin@realserv.com.br` | `Admin@2024` |
+| Recrutador | `recrutador@realserv.com.br` | `Recruta@2024` |
+| Departamento Pessoal | `dp@realserv.com.br` | `Pessoal@2024` |
 
-Etapa 3, Treinamentos e cursos: até 6 itens (nome do curso, instituição, ano). Referências: até 3 (nome, telefone, parentesco/relação, cidade).
+> Os CNPJs das oito empresas vêm preenchidos com valores fictícios (válidos nos dígitos
+> verificadores) só para o ambiente de demonstração. Substitua pelos CNPJs reais em
+> *Cadastros → Empresas* antes de usar para valer.
 
-Etapa 4, Empregos anteriores (último, penúltimo, antepenúltimo, todos obrigatórios ou marcar “não possui”): empresa, telefone, contato, setor, cargo, data de admissão, data de saída, último salário, motivo da saída.
+### Scripts
 
-Etapa 5, Uniforme: nº do sapato, tamanho de camisa/blusa, nº da calça. Exibir aviso automático quando a vaga for portaria: “Candidatos à vaga de portaria devem providenciar sapato preto”.
+| Comando | O que faz |
+| --- | --- |
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Build de produção |
+| `npm start` | Sobe o build de produção |
+| `npm test` | Testes das regras críticas |
+| `npm run typecheck` | Checagem de tipos |
+| `npm run seed` | Popula cadastros mestres e usuários |
+| `npm run prisma:migrate` | Cria uma migração nova em desenvolvimento |
+| `npm run prisma:studio` | Abre o navegador de dados do Prisma |
 
-Etapa 6, Questionário: (1) concorda em trabalhar em escala de revezamento, inclusive domingos e feriados? (2) tem parente na empresa? nome e setor; (3) já trabalhou nesta empresa? em que ano; (4) é fumante? (5) deseja vale-transporte? linhas de ônibus e valor da passagem; chave PIX; (6) texto livre “Escreva, em 5 linhas, sobre você” (limite de caracteres).
+---
 
-Etapa 7, Declaração e assinatura: aceite do termo de veracidade das informações e do termo de consentimento LGPD (texto configurável pelo admin), assinatura por desenho em canvas (touch), data e local preenchidos automaticamente, registro de IP e hora.
+## Variáveis de ambiente
 
-## Upload de documentos (aba Documentos)
+Todas estão documentadas em [`.env.example`](.env.example). As essenciais:
 
-Checklist admissional padrão, cada item com status (pendente, enviado, conferido, com pendência), upload de imagem ou PDF direto da câmera do celular, visualizador embutido e campo de observação do DP:
+| Variável | Obrigatória | Para que serve |
+| --- | --- | --- |
+| `DATABASE_URL` | sim | Conexão PostgreSQL. |
+| `AUTH_SECRET` | sim | Assina o cookie de sessão e os links temporários. |
+| `ENCRYPTION_KEY` | sim | AES-256 (32 bytes em base64) que cifra CPF e RG em repouso. |
+| `APP_URL` | sim | URL pública; monta o link enviado ao candidato. |
+| `STORAGE_DRIVER` | não | `local` (padrão) ou `s3`. |
+| `LOCAL_STORAGE_DIR` | não | Pasta dos uploads no driver local (padrão `./.uploads`). |
+| `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | se `s3` | Credenciais do storage. |
+| `S3_ENDPOINT`, `S3_FORCE_PATH_STYLE` | se R2/MinIO | Endpoint alternativo. |
+| `DIAS_VALIDADE_LINK` | não | Validade do link do candidato (padrão 30 dias). |
 
-- Currículo
-- RG (frente e verso) ou RG digital
-- CPF
-- CTPS digital (print do app) ou CTPS física
-- Extrato/consulta do FGTS ou CTPS digital com vínculos
-- PIS/NIT
-- Título de eleitor
-- CNH (obrigatório para manobrista; opcional para os demais)
-- Certificado de reservista/alistamento militar (homens)
-- Comprovante de residência atualizado (aceitar conta de consumo, contrato ou nota fiscal em nome do candidato)
-- Certidão de casamento ou união estável
-- Certidão de nascimento dos filhos
-- RG/CPF dos filhos
-- Carteira de vacinação dos filhos até 6 anos (salário-família)
-- Comprovante de escolaridade/frequência escolar dos filhos de 7 a 14 anos (salário-família)
-- Certificado de escolaridade
-- Certificados de cursos (ex.: brigada de incêndio, controlador de acesso)
-- Foto 3x4
-- Exame admissional (ASO)
-- Comprovante de conta bancária ou chave PIX
+> **`ENCRYPTION_KEY` não pode ser trocada depois** sem reprocessar os dados: os CPFs e RGs
+> já cifrados ficariam ilegíveis. Guarde-a junto com o backup do banco.
 
-O DP deve conseguir adicionar itens extras ao checklist de um candidato específico. O sistema só permite mover para “Admitido” quando todos os itens obrigatórios estiverem conferidos (admin pode forçar com justificativa).
+### Storage
 
-## Entrevista (aba Entrevista)
+| Cenário | Configuração |
+| --- | --- |
+| Desenvolvimento | `STORAGE_DRIVER=local` |
+| AWS S3 | `STORAGE_DRIVER=s3`, `S3_ENDPOINT` vazio, região real (ex.: `sa-east-1`) |
+| Cloudflare R2 | `STORAGE_DRIVER=s3`, `S3_REGION=auto`, `S3_ENDPOINT=https://<conta>.r2.cloudflarestorage.com` |
+| MinIO local | `STORAGE_DRIVER=s3`, `S3_ENDPOINT=http://localhost:9000`, `S3_FORCE_PATH_STYLE=true` |
 
-- Agendamento com data, hora, local (presencial na sede ou online), entrevistador, envio de confirmação por WhatsApp (link wa.me pré-preenchido) e e-mail.
-- Roteiro de entrevista configurável, com as observações que hoje o entrevistador anota à mão: pontualidade (horário de chegada), apresentação pessoal, comunicação, experiência na função, disponibilidade de horário e dias (inclusive domingos/feriados), restrição de horário por filhos menores, distância/tempo de deslocamento até o posto, possui CNH e experiência em estacionamento/manobra, conhecimento básico de informática, experiência militar ou em segurança, interesse em cursos.
-- Notas de 1 a 5 por critério, parecer final (aprovado / reprovado / banco de talentos), vaga(s) indicada(s), posto sugerido e campo de observações livres.
-- Registro de quem entrevistou, data e hora.
+O bucket deve ser **privado**. Nenhum documento é servido por URL pública: o download passa
+sempre pela rota autenticada `/api/arquivos/[id]`, que registra o acesso.
 
-## Informações Internas (aba do DP)
+---
 
-Nome do supervisor, posto, escala, empresa contratante (uma das oito), acúmulo de função (sim/não e qual), base salarial, benefícios (vale-transporte, assiduidade, outros), data de início, data do treinamento/integração, número da admissão (ADM nn/mm, gerado automaticamente), responsável pela aprovação e assinatura digital do responsável.
+## Deploy
 
-## Saídas e integrações
+### Vercel (mais simples)
 
-1. Geração da Ficha de Solicitação de Emprego completa em PDF, com o layout equivalente ao formulário em papel (logo do Grupo Real Serv no cabeçalho, seções na mesma ordem, assinaturas), para arquivo e impressão.
-1. Geração do dossiê de admissão em PDF único: ficha + todos os documentos enviados, na ordem do checklist, com capa e índice.
-1. Exportação dos dados admissionais em planilha (xlsx/csv) no layout que a contabilidade usa para lançar no eSocial: dados pessoais, documentos, endereço, dependentes, cargo, salário, escala, empresa, data de admissão.
-1. Relatórios: admissões por mês e por empresa, candidatos por etapa, tempo médio entre entrevista e admissão, documentos pendentes, banco de talentos por função e cidade.
-1. Log de auditoria de todas as alterações (quem, quando, o quê).
+1. Conecte o repositório e configure as variáveis de ambiente do painel.
+2. Use um Postgres gerenciado (Neon, Supabase, RDS) e um storage S3-compatível — o
+   sistema de arquivos da Vercel é efêmero, então **`STORAGE_DRIVER=local` não serve** lá.
+3. Rode `npx prisma migrate deploy` no build ou por um job de release.
 
-## LGPD e segurança
+### Docker / VPS
 
-- Consentimento explícito do candidato registrado com data, hora e IP.
-- Dados sensíveis (CPF, RG, documentos) criptografados em repouso; links de download expiram.
-- Política de retenção configurável: candidatos reprovados/desistentes são anonimizados após X meses (padrão 6), salvo se marcados como banco de talentos.
-- Todos os acessos ao dossiê ficam registrados.
-- Não expor documentos em URLs públicas.
+```bash
+npm ci
+npm run build
+npx prisma migrate deploy
+npm start          # atrás de um proxy reverso com HTTPS
+```
 
-## Entregáveis
+Coloque a aplicação **sempre atrás de HTTPS**: o cookie de sessão só é marcado como `secure`
+em produção, e a ficha trafega dados pessoais.
 
-1. Modelo de dados (schema Prisma) com todas as entidades acima.
-1. Aplicação funcional com as telas: login, painel/kanban, lista de candidatos, detalhe do candidato (5 abas), formulário público do candidato (wizard), cadastros mestres, relatórios.
-1. Geração de PDF (ficha e dossiê) e exportação xlsx.
-1. Seed com as oito empresas, as funções, as escalas e o checklist padrão.
-1. README com instruções de instalação, variáveis de ambiente, deploy e um guia rápido para o RH.
-1. Testes básicos das regras críticas: validação de CPF, geração do número ADM, bloqueio de admissão com documentos pendentes, regras de obrigatoriedade por função.
+### Rotina de retenção (LGPD)
 
-Comece apresentando o plano de arquitetura e o schema; aguarde minha aprovação antes de gerar o código. Depois implemente nesta ordem, mostrando o que foi feito ao fim de cada etapa:
+A anonimização de reprovados e desistentes pode ser disparada pela tela
+*Cadastros → Configurações*. Para automatizar, agende um job diário chamando
+`anonimizarVencidos()` de `src/server/retencao.ts` — por exemplo, com um cron que execute
+`npx tsx -e "import('./src/server/retencao').then(m => m.anonimizarVencidos())"`.
 
-1. Login com usuário e senha (perfis admin, recrutador, DP) e painel de candidatos.
-1. Link público para o candidato preencher a ficha e anexar os documentos pelo celular.
-1. Tela do DP para visualizar ficha e documentos e gerar o PDF único do candidato.
-1. Entrevista e pipeline.
-1. Informações internas, numeração ADM e exportação para a contabilidade.
-1. Relatórios, LGPD e testes.
+---
 
-A versão mínima utilizável é o resultado das etapas 1 a 3; entregue-a funcionando antes de avançar.
+## Guia rápido para o RH
+
+### Recebi um currículo. E agora?
+
+1. No painel, clique em **Novo candidato**, informe nome e celular e escolha a vaga.
+2. O sistema devolve um link. Clique em **Enviar por WhatsApp** — a mensagem já vai pronta.
+3. O candidato preenche pelo celular. Você acompanha pelo selo *Ficha* no painel:
+   *Não iniciada → Em preenchimento → Enviada*.
+
+O link vale 30 dias. Se expirar ou o candidato perder, abra o candidato,
+clique em **Link do candidato** e gere um novo (o anterior deixa de funcionar).
+
+### Agendar e registrar a entrevista
+
+Na aba **Entrevista**, clique em *Agendar entrevista*, escolha data, hora e modalidade. O
+botão **Confirmar por WhatsApp** manda a confirmação pronta para o candidato.
+
+Depois da entrevista, preencha o roteiro na mesma aba: horário de chegada, notas de 1 a 5,
+disponibilidade, deslocamento, CNH e o parecer final. Ao salvar, o candidato **anda sozinho
+no pipeline**: aprovado vai para *Aprovado*, reprovado para *Reprovado*, e assim por diante.
+
+### Conferir documentos
+
+Na aba **Documentos** você vê o checklist inteiro. Cada item mostra o status e permite
+visualizar o arquivo ali mesmo, sem baixar.
+
+- **Conferido** — documento aceito.
+- **Com pendência** — escreva o motivo; **o candidato lê esse texto** no link dele e pode
+  reenviar sem falar com ninguém.
+- **+ Adicionar documento ao checklist** — inclui um item extra só para aquele candidato.
+
+Itens condicionais só aparecem como obrigatórios quando fazem sentido: a CNH para
+manobrista, o reservista para homens, as certidões dos filhos para quem tem filhos, a
+vacinação para filhos de até 6 anos e a frequência escolar dos de 7 a 14.
+
+### Admitir
+
+Na aba **Informações Internas**, preencha empresa contratante, posto, escala, supervisor,
+salário, benefícios e as datas. Depois clique em **Mover etapa → Admitido**.
+
+O sistema **bloqueia a admissão enquanto houver documento obrigatório sem conferência** e
+mostra quais estão faltando. Se for mesmo necessário admitir antes, só o administrador
+consegue, e precisa escrever uma justificativa, que fica registrada no histórico e sai
+impressa na ficha.
+
+Ao admitir, o número **ADM nn/mm** é gerado sozinho: `ADM 01/09` é a primeira admissão de
+setembro. A contagem reinicia todo mês.
+
+### Gerar o dossiê
+
+Na página do candidato:
+
+- **Ficha em PDF** — só a ficha, no layout do papel, para conferência ou impressão.
+- **Baixar dossiê (PDF único)** — capa com o número da admissão, índice, a ficha completa e
+  todos os documentos, cada bloco com sua página separadora. É o arquivo que vai para a
+  contabilidade.
+
+### Mandar as admissões do mês para a contabilidade
+
+Em **Relatórios**, escolha mês, ano e (se quiser) a empresa, e clique em
+**Baixar planilha (.xlsx)**. Vem uma linha por admitido com dados pessoais, documentos,
+endereço, cargo, salário, escala e empresa, mais uma aba de dependentes para o
+salário-família.
+
+### Quem pode o quê
+
+| | Administrador | Recrutador | Dep. Pessoal |
+| --- | :---: | :---: | :---: |
+| Ver painel e candidatos | ✓ | ✓ | ✓ |
+| Cadastrar candidato e gerar link | ✓ | ✓ | ✓ |
+| Agendar e registrar entrevistas | ✓ | ✓ | |
+| Conferir documentos | ✓ | | ✓ |
+| Informações internas e ADM | ✓ | | ✓ |
+| Baixar dossiê | ✓ | ✓ | ✓ |
+| Exportar para a contabilidade | ✓ | | ✓ |
+| Cadastros mestres e usuários | ✓ | | |
+| Admitir com pendências (com justificativa) | ✓ | | |
+
+---
+
+## Decisões de arquitetura
+
+A stack segue o que a especificação sugeriu: **Next.js 15 (App Router) + TypeScript +
+Prisma + PostgreSQL + Tailwind**, com componentes no padrão shadcn/ui copiados para
+`src/components/ui` (sem dependência de runtime). Duas escolhas fogem da sugestão:
+
+**Autenticação sem NextAuth.** O requisito é um único provedor de e-mail e senha para
+usuários internos, sem OAuth, sem federação e sem cadastro público — o NextAuth v5 ainda
+está em beta e traria uma dependência grande para resolver algo que são ~90 linhas.
+`src/lib/auth.ts` faz sessão em cookie `httpOnly` com JWT assinado (`jose`) e senha com
+bcrypt. Se um dia entrar login corporativo (Google Workspace, Microsoft), vale trocar por
+NextAuth — a troca fica contida nesse arquivo e no `layout` do painel.
+
+**Server Actions em vez de uma API REST.** Todo formulário posta direto para uma Server
+Action, o que dispensa uma camada de rotas e mantém a validação no servidor. As rotas em
+`src/app/api` existem só onde o navegador precisa de um arquivo binário: PDFs, documentos e
+planilhas.
+
+Outros pontos que valem registro:
+
+- **Checklist materializado por candidato.** Ao cadastrar, o checklist padrão é copiado
+  para o candidato. Mudar o checklist mestre depois não altera processos em andamento, e o
+  DP pode acrescentar itens avulsos a um candidato específico.
+- **Regras de obrigatoriedade separadas do banco.** `src/lib/checklist.ts` é código puro:
+  recebe os itens e o perfil do candidato e diz o que falta. Por isso dá para testar sem
+  subir banco, e é o mesmo cálculo que alimenta a tela, o bloqueio da admissão e o aviso no
+  topo da página.
+- **Numeração ADM à prova de concorrência.** O par ano/mês/sequencial tem índice único no
+  banco; se dois DPs admitirem ao mesmo tempo, um recebe erro de unicidade e a operação é
+  repetida com o próximo número, em vez de gerar duas admissões `ADM 07/09`.
+- **Dossiê montado com `pdf-lib`.** Imagens viram páginas A4 centralizadas e PDFs são
+  copiados página a página. Arquivo ilegível não derruba a geração: entra uma página de
+  aviso no lugar, dizendo o que houve.
+
+---
+
+## Estrutura do projeto
+
+```
+prisma/
+  schema.prisma           modelo de dados completo
+  seed.ts                 empresas, funções, escalas, checklist, termos, usuários
+src/
+  app/
+    login/                autenticação
+    ficha/[token]/        formulário público do candidato (wizard de 8 etapas)
+    painel/               kanban, candidatos, relatórios, cadastros
+    api/                  PDFs, download de documentos e exportação
+  components/ui/          primitivos de interface (padrão shadcn/ui)
+  lib/
+    validacao.ts          CPF, CNPJ, PIS e máscaras
+    formato.ts            datas dd/mm/aaaa e moeda em R$
+    checklist.ts          regras de obrigatoriedade dos documentos
+    admissao.ts           numeração ADM nn/mm
+    cripto.ts             AES-256-GCM e tokens
+    auth.ts               sessão e permissões
+    storage.ts            driver local ou S3-compatível
+  server/
+    candidatos.ts         pipeline, transições e geração do número ADM
+    auditoria.ts          log de auditoria e registro de acessos
+    retencao.ts           anonimização da LGPD
+    exportacao.ts         planilha do eSocial
+    pdf/                  ficha, dossiê e o motor de layout
+tests/                    regras críticas
+```
+
+---
+
+## Testes
+
+```bash
+npm test
+```
+
+48 testes cobrindo as regras que não podem quebrar:
+
+- **`validacao.test.ts`** — dígitos verificadores de CPF, CNPJ e PIS, sequências repetidas,
+  máscaras e normalização de telefone para o `wa.me`.
+- **`admissao.test.ts`** — formato `ADM nn/mm`, reinício da contagem a cada mês,
+  sequenciais acima de 99 e rejeição de entradas inválidas.
+- **`checklist.test.ts`** — obrigatoriedade por função (CNH do manobrista), por sexo
+  (reservista), por estado civil e pelas faixas etárias do salário-família, incluindo os
+  limites de 6/7 e 14/15 anos; e o bloqueio da admissão com documento pendente.
+- **`formato.test.ts`** — datas em dd/mm/aaaa sem deslocamento de fuso, moeda em R$ e o
+  ciclo de cifrar/decifrar dos dados sensíveis.
+
+---
+
+## Limitações conhecidas
+
+- **Fotos em HEIC** (padrão do iPhone com "Alta eficiência") são aceitas no upload e podem
+  ser baixadas, mas nem o navegador as exibe nem o `pdf-lib` as incorpora ao dossiê. A aba
+  Documentos avisa o DP quando isso acontece, para pedir o reenvio antes de gerar o PDF; se
+  o dossiê for gerado assim mesmo, entra uma página de aviso no lugar da imagem. A maioria
+  dos iPhones já envia JPG pelo WhatsApp e pelo seletor de arquivos; se virar um problema
+  recorrente, a saída é converter no servidor com `sharp` ou `heic-convert` no upload.
+- **O logotipo é um bloco "RS" desenhado**, não a arte oficial. Para usar o logo real,
+  coloque o PNG em `public/` e troque a chamada em `src/server/pdf/ficha.ts` por
+  `doc.embedPng`.
+- **A confirmação de entrevista é semiautomática**: o sistema monta a mensagem e abre o
+  `wa.me` ou o cliente de e-mail, mas o envio é manual. Integrar a API oficial do WhatsApp
+  Business exige conta aprovada e templates homologados pela Meta.
+- **Não há envio automático de e-mail** (recuperação de senha, avisos). A troca de senha é
+  feita pelo administrador em *Cadastros → Usuários*.
+- **A `ENCRYPTION_KEY` não tem rotação automática.** Trocá-la exige reprocessar os registros
+  cifrados.

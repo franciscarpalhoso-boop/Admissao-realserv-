@@ -1,0 +1,601 @@
+// Sistema de Entrevista e Admissão — Grupo Real Serv
+// Modelo de dados completo (Prisma + PostgreSQL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Perfil {
+  ADMIN
+  RECRUTADOR
+  DP
+}
+
+enum EtapaPipeline {
+  TRIAGEM
+  ENTREVISTA_AGENDADA
+  ENTREVISTADO
+  APROVADO
+  DOCUMENTACAO
+  EXAME_ADMISSIONAL
+  ADMITIDO
+  REPROVADO
+  DESISTIU
+  BANCO_TALENTOS
+}
+
+enum StatusFicha {
+  NAO_INICIADA
+  EM_PREENCHIMENTO
+  ENVIADA
+}
+
+enum StatusDocumento {
+  PENDENTE
+  ENVIADO
+  CONFERIDO
+  COM_PENDENCIA
+}
+
+enum EstadoCivil {
+  SOLTEIRO
+  CASADO
+  DIVORCIADO
+  VIUVO
+  UNIAO_ESTAVEL
+  SEPARADO
+}
+
+enum Escolaridade {
+  FUNDAMENTAL_INCOMPLETO
+  FUNDAMENTAL_COMPLETO
+  MEDIO_INCOMPLETO
+  MEDIO_COMPLETO
+  SUPERIOR_INCOMPLETO
+  SUPERIOR_COMPLETO
+  POS_GRADUACAO
+}
+
+enum ModalidadeEntrevista {
+  PRESENCIAL
+  ONLINE
+}
+
+enum ParecerEntrevista {
+  APROVADO
+  REPROVADO
+  BANCO_TALENTOS
+}
+
+enum ExigenciaDocumento {
+  OBRIGATORIO
+  OPCIONAL
+  CONDICIONAL // exigido conforme regra (ex.: CNH para manobrista)
+}
+
+enum RegraCondicional {
+  NENHUMA
+  EXIGE_CNH          // funções que exigem CNH
+  SEXO_MASCULINO     // reservista
+  POSSUI_FILHOS      // certidão de nascimento dos filhos
+  FILHOS_ATE_6       // carteira de vacinação
+  FILHOS_7_A_14      // comprovante de frequência escolar
+  CASADO_OU_UNIAO    // certidão de casamento/união estável
+}
+
+enum Sexo {
+  MASCULINO
+  FEMININO
+  NAO_INFORMADO
+}
+
+// ---------------------------------------------------------------------------
+// Usuários e auditoria
+// ---------------------------------------------------------------------------
+
+model Usuario {
+  id        String   @id @default(cuid())
+  nome      String
+  email     String   @unique
+  senhaHash String
+  perfil    Perfil
+  ativo     Boolean  @default(true)
+  criadoEm  DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  entrevistasConduzidas Entrevista[]        @relation("EntrevistadorEntrevista")
+  movimentacoes         MovimentacaoEtapa[]
+  auditorias            LogAuditoria[]
+  acessosDossie         AcessoDossie[]
+
+  @@map("usuarios")
+}
+
+model LogAuditoria {
+  id         String   @id @default(cuid())
+  usuarioId  String?
+  usuario    Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+  autorLabel String // "Candidato (link público)" quando não há usuário
+  entidade   String // ex.: "Candidato", "Documento"
+  entidadeId String
+  acao       String // ex.: "CRIACAO", "ATUALIZACAO", "EXCLUSAO", "DOWNLOAD_DOSSIE"
+  detalhes   Json?
+  ip         String?
+  criadoEm   DateTime @default(now())
+
+  @@index([entidade, entidadeId])
+  @@index([criadoEm])
+  @@map("logs_auditoria")
+}
+
+model AcessoDossie {
+  id          String   @id @default(cuid())
+  candidatoId String
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  usuarioId   String?
+  usuario     Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+  tipo        String // "FICHA_PDF" | "DOSSIE_PDF" | "DOCUMENTO"
+  referencia  String?
+  ip          String?
+  criadoEm    DateTime @default(now())
+
+  @@index([candidatoId])
+  @@map("acessos_dossie")
+}
+
+model Configuracao {
+  id        String   @id @default(cuid())
+  chave     String   @unique
+  valor     String
+  descricao String?
+  atualizadoEm DateTime @updatedAt
+
+  @@map("configuracoes")
+}
+
+// ---------------------------------------------------------------------------
+// Cadastros mestres
+// ---------------------------------------------------------------------------
+
+model Empresa {
+  id          String   @id @default(cuid())
+  nome        String   @unique
+  cnpj        String   @unique
+  logradouro  String?
+  numero      String?
+  complemento String?
+  bairro      String?
+  cidade      String?
+  uf          String?
+  cep         String?
+  responsavel String?
+  ativo       Boolean  @default(true)
+  criadoEm    DateTime @default(now())
+
+  postos     Posto[]
+  candidatos InformacoesInternas[]
+
+  @@map("empresas")
+}
+
+model Supervisor {
+  id       String  @id @default(cuid())
+  nome     String
+  telefone String?
+  email    String?
+  ativo    Boolean @default(true)
+
+  postos              Posto[]
+  informacoesInternas InformacoesInternas[]
+
+  @@map("supervisores")
+}
+
+model Posto {
+  id           String  @id @default(cuid())
+  nome         String // nome do condomínio
+  logradouro   String?
+  numero       String?
+  bairro       String?
+  cidade       String?
+  uf           String?
+  cep          String?
+  empresaId    String?
+  empresa      Empresa?    @relation(fields: [empresaId], references: [id], onDelete: SetNull)
+  supervisorId String?
+  supervisor   Supervisor? @relation(fields: [supervisorId], references: [id], onDelete: SetNull)
+  ativo        Boolean @default(true)
+
+  informacoesInternas InformacoesInternas[]
+  entrevistas         Entrevista[]
+
+  @@map("postos")
+}
+
+model Funcao {
+  id          String  @id @default(cuid())
+  nome        String  @unique
+  descricao   String?
+  exigeCnh    Boolean @default(false)
+  exigeSapatoPreto Boolean @default(false)
+  avisoEspecifico  String?
+  requisitos  String[] @default([])
+  ativo       Boolean @default(true)
+
+  candidatos Candidato[]
+
+  @@map("funcoes")
+}
+
+model Escala {
+  id            String  @id @default(cuid())
+  nome          String  @unique // 5x1, 6x1, 12x36
+  descricao     String?
+  horarioInicio String?
+  horarioFim    String?
+  ativo         Boolean @default(true)
+
+  informacoesInternas InformacoesInternas[]
+
+  @@map("escalas")
+}
+
+model ItemChecklistPadrao {
+  id          String             @id @default(cuid())
+  nome        String
+  descricao   String?
+  ordem       Int
+  exigencia   ExigenciaDocumento @default(OBRIGATORIO)
+  regra       RegraCondicional   @default(NENHUMA)
+  aceitaMulti Boolean            @default(false) // permite múltiplos arquivos (ex.: filhos, cursos)
+  ativo       Boolean            @default(true)
+
+  documentos DocumentoCandidato[]
+
+  @@map("itens_checklist_padrao")
+}
+
+// ---------------------------------------------------------------------------
+// Candidato e ficha de solicitação de emprego
+// ---------------------------------------------------------------------------
+
+model Candidato {
+  id String @id @default(cuid())
+
+  // Acesso público por token
+  tokenPublico     String    @unique
+  tokenExpiraEm    DateTime?
+  statusFicha      StatusFicha   @default(NAO_INICIADA)
+  etapa            EtapaPipeline @default(TRIAGEM)
+  etapaAtualizadaEm DateTime     @default(now())
+
+  // Etapa 1 — dados pessoais
+  nomeCompleto     String
+  telefoneContato  String?
+  telefoneRecado   String?
+  celularWhatsapp  String?
+  email            String?
+  funcaoId         String?
+  funcao           Funcao?   @relation(fields: [funcaoId], references: [id], onDelete: SetNull)
+  tempoExperiencia String?
+  naturalidade     String?
+  ufNaturalidade   String?
+  dataNascimento   DateTime?
+  sexo             Sexo      @default(NAO_INFORMADO)
+  estadoCivil      EstadoCivil?
+  nomeConjuge      String?
+  logradouro       String?
+  numero           String?
+  complemento      String?
+  bairro           String?
+  cidade           String?
+  uf               String?
+  cep              String?
+  tempoResidencia  String?
+  escolaridade     Escolaridade?
+  nomeMae          String?
+  nomePai          String?
+
+  // Etapa 2 — documentação (campos sensíveis armazenados cifrados)
+  cpf                String? // somente dígitos, usado para busca/duplicidade
+  cpfCifrado         String?
+  pisNit             String?
+  rgNumero           String?
+  rgNumeroCifrado    String?
+  rgDataEmissao      DateTime?
+  rgOrgaoExpedidor   String?
+  rgUf               String?
+  cnhNumero          String?
+  cnhRegistro        String?
+  cnhUf              String?
+  cnhDataEmissao     DateTime?
+  cnhValidade        DateTime?
+  cnhCategoria       String?
+  cnhPrimeiraHabilitacao DateTime?
+  ctpsNumero         String?
+  ctpsSerie          String?
+  ctpsUf             String?
+  ctpsDigital        Boolean @default(false)
+  tituloEleitorNumero String?
+  tituloEleitorZona   String?
+  tituloEleitorSecao  String?
+  reservistaNumero    String?
+  tipoSanguineo       String?
+
+  // Etapa 5 — uniforme
+  numeroSapato   String?
+  tamanhoCamisa  String?
+  numeroCalca    String?
+
+  // Etapa 6 — questionário
+  aceitaEscalaRevezamento Boolean?
+  possuiParenteEmpresa    Boolean?
+  parenteNome             String?
+  parenteSetor            String?
+  jaTrabalhouEmpresa      Boolean?
+  jaTrabalhouAno          String?
+  fumante                 Boolean?
+  desejaValeTransporte    Boolean?
+  linhasOnibus            String?
+  valorPassagem           Decimal? @db.Decimal(10, 2)
+  chavePix                String?
+  sobreVoce               String?
+
+  // Etapa 7 — declaração e assinatura
+  aceiteVeracidade     Boolean   @default(false)
+  aceiteLgpd           Boolean   @default(false)
+  assinaturaBase64     String? // PNG data URL do canvas
+  assinaturaLocal      String?
+  assinaturaData       DateTime?
+  consentimentoIp      String?
+  consentimentoUserAgent String?
+
+  // Controle
+  anonimizadoEm DateTime?
+  observacoesTriagem String?
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  filhos              Filho[]
+  cursos              Curso[]
+  referencias         Referencia[]
+  empregosAnteriores  EmpregoAnterior[]
+  documentos          DocumentoCandidato[]
+  entrevistas         Entrevista[]
+  informacoesInternas InformacoesInternas?
+  movimentacoes       MovimentacaoEtapa[]
+  acessosDossie       AcessoDossie[]
+
+  @@index([etapa])
+  @@index([cpf])
+  @@index([nomeCompleto])
+  @@map("candidatos")
+}
+
+model Filho {
+  id             String    @id @default(cuid())
+  candidatoId    String
+  candidato      Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  nome           String
+  dataNascimento DateTime?
+  cpf            String?
+  ordem          Int       @default(0)
+
+  @@index([candidatoId])
+  @@map("filhos")
+}
+
+model Curso {
+  id          String    @id @default(cuid())
+  candidatoId String
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  nome        String
+  instituicao String?
+  ano         String?
+  ordem       Int       @default(0)
+
+  @@index([candidatoId])
+  @@map("cursos")
+}
+
+model Referencia {
+  id          String    @id @default(cuid())
+  candidatoId String
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  nome        String
+  telefone    String?
+  relacao     String?
+  cidade      String?
+  ordem       Int       @default(0)
+
+  @@index([candidatoId])
+  @@map("referencias")
+}
+
+model EmpregoAnterior {
+  id           String    @id @default(cuid())
+  candidatoId  String
+  candidato    Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  ordem        Int       @default(0) // 0 = último, 1 = penúltimo, 2 = antepenúltimo
+  naoPossui    Boolean   @default(false)
+  empresa      String?
+  telefone     String?
+  contato      String?
+  setor        String?
+  cargo        String?
+  dataAdmissao DateTime?
+  dataSaida    DateTime?
+  ultimoSalario Decimal? @db.Decimal(10, 2)
+  motivoSaida  String?
+
+  @@index([candidatoId])
+  @@map("empregos_anteriores")
+}
+
+// ---------------------------------------------------------------------------
+// Documentos
+// ---------------------------------------------------------------------------
+
+model DocumentoCandidato {
+  id          String    @id @default(cuid())
+  candidatoId String
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+
+  itemChecklistId String?
+  itemChecklist   ItemChecklistPadrao? @relation(fields: [itemChecklistId], references: [id], onDelete: SetNull)
+
+  // Snapshot do item (permite itens extras adicionados pelo DP)
+  nome       String
+  ordem      Int                @default(0)
+  exigencia  ExigenciaDocumento @default(OBRIGATORIO)
+  regra      RegraCondicional   @default(NENHUMA)
+  extra      Boolean            @default(false)
+
+  status         StatusDocumento @default(PENDENTE)
+  observacaoDp   String?
+  conferidoEm    DateTime?
+  conferidoPor   String?
+
+  arquivos ArquivoDocumento[]
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@index([candidatoId])
+  @@map("documentos_candidato")
+}
+
+model ArquivoDocumento {
+  id          String             @id @default(cuid())
+  documentoId String
+  documento   DocumentoCandidato @relation(fields: [documentoId], references: [id], onDelete: Cascade)
+  chave       String // chave no storage (nunca exposta publicamente)
+  nomeOriginal String
+  mimeType    String
+  tamanho     Int
+  enviadoEm   DateTime @default(now())
+  enviadoPor  String? // "candidato" ou id do usuário
+
+  @@index([documentoId])
+  @@map("arquivos_documento")
+}
+
+// ---------------------------------------------------------------------------
+// Entrevista
+// ---------------------------------------------------------------------------
+
+model Entrevista {
+  id          String    @id @default(cuid())
+  candidatoId String
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+
+  entrevistadorId String?
+  entrevistador   Usuario? @relation("EntrevistadorEntrevista", fields: [entrevistadorId], references: [id], onDelete: SetNull)
+
+  dataHora    DateTime
+  modalidade  ModalidadeEntrevista @default(PRESENCIAL)
+  local       String?
+  linkOnline  String?
+
+  realizada       Boolean   @default(false)
+  horarioChegada  String?
+  realizadaEm     DateTime?
+
+  // Roteiro — notas de 1 a 5
+  notaApresentacao      Int?
+  notaComunicacao       Int?
+  notaExperiencia       Int?
+  notaDisponibilidade   Int?
+  notaPontualidade      Int?
+
+  disponibilidadeDomingos Boolean?
+  restricaoHorarioFilhos  Boolean?
+  restricaoHorarioDetalhe String?
+  tempoDeslocamento       String?
+  possuiCnh               Boolean?
+  experienciaManobra      Boolean?
+  conhecimentoInformatica Boolean?
+  experienciaMilitarSeguranca Boolean?
+  interesseCursos         Boolean?
+
+  parecer        ParecerEntrevista?
+  postoSugeridoId String?
+  postoSugerido   Posto?  @relation(fields: [postoSugeridoId], references: [id], onDelete: SetNull)
+  vagasIndicadas String[] @default([])
+  observacoes    String?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@index([candidatoId])
+  @@map("entrevistas")
+}
+
+// ---------------------------------------------------------------------------
+// Informações internas (DP)
+// ---------------------------------------------------------------------------
+
+model InformacoesInternas {
+  id          String    @id @default(cuid())
+  candidatoId String    @unique
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+
+  supervisorId String?
+  supervisor   Supervisor? @relation(fields: [supervisorId], references: [id], onDelete: SetNull)
+  postoId      String?
+  posto        Posto?      @relation(fields: [postoId], references: [id], onDelete: SetNull)
+  escalaId     String?
+  escala       Escala?     @relation(fields: [escalaId], references: [id], onDelete: SetNull)
+  empresaId    String?
+  empresa      Empresa?    @relation(fields: [empresaId], references: [id], onDelete: SetNull)
+
+  acumuloFuncao        Boolean @default(false)
+  acumuloFuncaoQual    String?
+  baseSalarial         Decimal? @db.Decimal(10, 2)
+  valeTransporte       Boolean @default(false)
+  premioAssiduidade    Boolean @default(false)
+  outrosBeneficios     String?
+
+  dataInicio           DateTime?
+  dataTreinamento      DateTime?
+
+  numeroAdmissao       String?  @unique // "ADM 01/09"
+  admissaoSequencial   Int?
+  admissaoMes          Int?
+  admissaoAno          Int?
+
+  responsavelAprovacao String?
+  assinaturaResponsavel String?
+  justificativaForcada String?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@unique([admissaoAno, admissaoMes, admissaoSequencial])
+  @@map("informacoes_internas")
+}
+
+model MovimentacaoEtapa {
+  id          String    @id @default(cuid())
+  candidatoId String
+  candidato   Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  de          EtapaPipeline?
+  para        EtapaPipeline
+  usuarioId   String?
+  usuario     Usuario?  @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+  autorLabel  String
+  observacao  String?
+  criadoEm    DateTime  @default(now())
+
+  @@index([candidatoId])
+  @@map("movimentacoes_etapa")
+}
