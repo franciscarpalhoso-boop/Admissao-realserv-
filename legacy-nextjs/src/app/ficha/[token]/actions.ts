@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma';
 import { cifrar } from '@/lib/cripto';
 import { parseDataISO, parseMoeda } from '@/lib/formato';
 import { somenteDigitos, validarCpf, validarPis } from '@/lib/validacao';
-import { MIMES_ACEITOS, gerarChave, salvarArquivo, validarUpload } from '@/lib/storage';
+import { gerarChave, salvarArquivo, validarUpload } from '@/lib/storage';
 import { ipDaRequisicao, registrarAuditoria, userAgentDaRequisicao } from '@/server/auditoria';
 import { buscarCandidatoPorToken, sincronizarStatusDocumento } from '@/server/candidatos';
 
@@ -424,5 +424,3 @@ export async function enviarDocumentoAction(
     return tratar(erro);
   }
 }
-
-export const FORMATOS_ACEITOS = MIMES_ACEITOS.join(',');

@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (max-width: 640px) {
+    /* Impede o zoom automático do iOS ao focar campos. */
+    input, select, textarea { font-size: 16px; }
+}
+
+@media print {
+    .nao-imprimir { display: none !important; }
+}
