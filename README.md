@@ -1,142 +1,172 @@
-# PROMPT PARA O CLAUDE CODE: SISTEMA DE ENTREVISTA E ADMISSÃO DO GRUPO REAL SERV
+# Sistema de Entrevista e Admissão — Grupo Real Serv
 
-## Contexto
+Substitui o processo em papel de recrutamento e admissão do Grupo Real Serv: o candidato
+preenche a Ficha de Solicitação de Emprego e envia os documentos pelo celular, por um link
+recebido no WhatsApp; o Departamento Pessoal confere tudo em um painel; e o dossiê de
+admissão sai em um único PDF, pronto para arquivar ou mandar para a contabilidade.
 
-Você vai construir um sistema web completo de recrutamento, entrevista e admissão para o Grupo Real Serv, grupo brasileiro de serviços de condomínios e facilities (portaria, controle de acesso, zeladoria, limpeza, copeira, auxiliar de escritório, manobrista, recepcionista), com sede em Santos/SP. O grupo tem oito empresas (CNPJs distintos): Real Serv First, Second, Fourth, Fifth, Sixth, Seventh, Eighth e Ninth. Os funcionários são contratados pela CLT e alocados em postos de trabalho (condomínios clientes), em escalas 5x1, 6x1 ou 12x36.
+**Laravel 11 + PostgreSQL + Blade**, feito para rodar em hospedagem compartilhada com
+PHP 8.2 e **sem Node.js no servidor**.
 
-Hoje o processo é feito em papel: o candidato preenche à mão uma “Ficha de Solicitação de Emprego” de 4 páginas, entrega currículo e cópias de documentos, o entrevistador anota observações à mão no currículo e o RH monta um dossiê físico numerado (ex.: “ADM 01/09” = primeira admissão de setembro). O sistema deve substituir integralmente esse fluxo, reproduzindo todos os campos da ficha em papel e reunindo os documentos digitalizados.
+- Para publicar: **[`DEPLOY-KINGHOST.md`](DEPLOY-KINGHOST.md)**
+- Especificação original: [`docs/ESPECIFICACAO.md`](docs/ESPECIFICACAO.md)
 
-## Requisitos essenciais (prioridade máxima)
+---
 
-Estes três pontos são o núcleo do sistema e devem funcionar antes de qualquer outra coisa:
+## O que está pronto
 
-1. O candidato preenche a ficha e anexa todos os documentos online, pelo celular, por meio de um link público enviado por WhatsApp (sem precisar criar conta).
-1. O Departamento Pessoal entra no sistema com login e senha e vê, em um painel, todos os candidatos, a ficha preenchida e os documentos anexados.
-1. Com um clique, o DP baixa um PDF único do candidato contendo a ficha completa mais todos os documentos anexados, na ordem do checklist, pronto para arquivar ou enviar à contabilidade.
+Os três requisitos essenciais funcionam de ponta a ponta:
 
-## Stack sugerida
+1. **Link público por WhatsApp** — o candidato abre no celular, preenche a ficha em 8
+   etapas com salvamento a cada etapa, assina no dedo e anexa documentos pela câmera.
+   Sem cadastro.
+2. **Painel do Departamento Pessoal** — login por e-mail e senha, kanban do pipeline,
+   lista com busca e filtros, e a página do candidato com as abas Ficha, Documentos,
+   Entrevista, Informações Internas e Histórico.
+3. **PDF único em um clique** — capa com o número da admissão, índice, a ficha completa
+   e todos os anexos, na ordem do checklist.
 
-Use Next.js (App Router) + TypeScript + Prisma + PostgreSQL, com Tailwind e shadcn/ui no front. Upload de arquivos em storage S3-compatível (aceite variável de ambiente para AWS S3, Cloudflare R2 ou MinIO local). Autenticação com NextAuth (e-mail/senha) e controle de acesso por perfil. Se julgar outra stack claramente melhor para o caso, justifique antes de começar. Todo o sistema deve ser em português do Brasil, com datas em dd/mm/aaaa, moeda em R$ e máscaras de CPF, CEP, telefone e PIS.
+Também: numeração `ADM nn/mm` por mês, bloqueio da admissão com documentos pendentes,
+regras condicionais do checklist, log de auditoria e registro de todo acesso a documento.
 
-## Perfis de usuário
+| Etapa da especificação | Situação |
+| --- | --- |
+| 1. Login e painel de candidatos | Pronto |
+| 2. Link público, ficha e documentos pelo celular | Pronto |
+| 3. Tela do DP e PDF único | Pronto |
+| 4. Entrevista e pipeline | Pipeline pronto; agendamento e roteiro da entrevista pendentes |
+| 5. Informações internas, ADM e exportação | Internas e ADM prontos; exportação xlsx pendente |
+| 6. Relatórios, LGPD e testes | Auditoria e testes prontos; relatórios e anonimização pendentes |
 
-1. Administrador (Diretoria/RH): acesso total, cadastros mestres, relatórios, exclusão.
-1. Recrutador/Entrevistador: cria vagas, agenda e conduz entrevistas, preenche a avaliação, movimenta o candidato no pipeline.
-1. Departamento Pessoal: conferência de documentos, preenchimento das informações internas, geração da ficha em PDF e exportação para a contabilidade.
-1. Candidato: acessa apenas por link público com token (sem cadastro), preenche a ficha e envia documentos pelo celular.
+---
 
-## Cadastros mestres
+## Rodar no seu computador
 
-- Empresas do grupo (nome, CNPJ, endereço, responsável).
-- Postos de trabalho (nome do condomínio, endereço, cidade, empresa contratante, supervisor responsável).
-- Funções (controlador de acesso, porteiro, zelador, auxiliar de limpeza, copeira, auxiliar de escritório, manobrista, recepcionista), cada uma com requisitos configuráveis (ex.: manobrista exige CNH válida; portaria exige sapato preto).
-- Escalas (5x1, 6x1, 12x36, com horários).
-- Supervisores.
-- Checklist de documentos admissionais configurável (ver lista abaixo).
+**Requisitos:** PHP 8.2+ (com `pdo_pgsql`, `gd`, `mbstring`), Composer e PostgreSQL.
 
-## Pipeline do candidato (kanban + lista)
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
 
-Etapas, com data/hora e usuário responsável em cada mudança:
+# Ajuste DB_DATABASE, DB_USERNAME e DB_PASSWORD no .env, depois:
+php artisan migrate
+php artisan db:seed
 
-1. Cadastro/Triagem (currículo recebido)
-1. Entrevista agendada
-1. Entrevistado (aguardando decisão)
-1. Aprovado (aguardando documentação)
-1. Documentação em conferência
-1. Exame admissional
-1. Admitido (gera número sequencial “ADM nn/mm” por mês)
-1. Reprovado / Desistiu / Banco de talentos
+php artisan serve    # http://127.0.0.1:8000
+```
 
-Cada candidato tem uma página de detalhe com abas: Ficha, Documentos, Entrevista, Informações Internas, Histórico.
+Usuários criados pelo seeder — **troque as senhas no primeiro acesso**:
 
-## Ficha de Solicitação de Emprego (formulário do candidato)
+| Perfil | E-mail | Senha inicial |
+| --- | --- | --- |
+| Administrador | `admin@realserv.com.br` | `Admin@2024` |
+| Recrutador | `recrutador@realserv.com.br` | `Recruta@2024` |
+| Departamento Pessoal | `dp@realserv.com.br` | `Pessoal@2024` |
 
-Reproduza exatamente os campos da ficha em papel, em etapas (wizard) responsivo para celular, com salvamento parcial:
+Para definir outras senhas já na instalação, preencha `SENHA_ADMIN`, `SENHA_RECRUTADOR`
+e `SENHA_DP` no `.env` (mínimo 8 caracteres). Rodar o seeder de novo **não** troca a
+senha de quem já existe.
 
-Etapa 1, Dados pessoais: nome completo; telefones de contato; celular (WhatsApp); vaga pretendida (select de funções); tempo de experiência na vaga; naturalidade; data de nascimento; estado civil; nome do cônjuge; endereço (rua, número, complemento, bairro, cidade, UF, CEP com busca automática via ViaCEP); tempo de residência; escolaridade; nome da mãe; nome do pai; e-mail.
+> Os CNPJs das oito empresas vêm com valores fictícios (dígitos verificadores válidos)
+> só para demonstração. Substitua pelos reais antes de usar para valer.
 
-Etapa 2, Documentação: CPF (validar dígitos); nº PIS/NIT; RG, data de emissão e órgão expedidor/UF; CNH (número, nº de registro, UF, data de emissão, validade, categoria, data da 1ª habilitação); CTPS (número e série, ou indicação de CTPS digital); título de eleitor (inscrição, zona, seção); certificado militar/reservista (número); tipo sanguíneo; quantidade de filhos e, para cada filho, nome, data de nascimento e CPF (usados para salário-família e IR).
+### Alterar o CSS
 
-Etapa 3, Treinamentos e cursos: até 6 itens (nome do curso, instituição, ano). Referências: até 3 (nome, telefone, parentesco/relação, cidade).
+O Tailwind é compilado **no desenvolvimento** e o resultado (`public/css/app.css`) vai
+versionado — o servidor não precisa de Node:
 
-Etapa 4, Empregos anteriores (último, penúltimo, antepenúltimo, todos obrigatórios ou marcar “não possui”): empresa, telefone, contato, setor, cargo, data de admissão, data de saída, último salário, motivo da saída.
+```bash
+npm install
+npm run css
+```
 
-Etapa 5, Uniforme: nº do sapato, tamanho de camisa/blusa, nº da calça. Exibir aviso automático quando a vaga for portaria: “Candidatos à vaga de portaria devem providenciar sapato preto”.
+---
 
-Etapa 6, Questionário: (1) concorda em trabalhar em escala de revezamento, inclusive domingos e feriados? (2) tem parente na empresa? nome e setor; (3) já trabalhou nesta empresa? em que ano; (4) é fumante? (5) deseja vale-transporte? linhas de ônibus e valor da passagem; chave PIX; (6) texto livre “Escreva, em 5 linhas, sobre você” (limite de caracteres).
+## Testes
 
-Etapa 7, Declaração e assinatura: aceite do termo de veracidade das informações e do termo de consentimento LGPD (texto configurável pelo admin), assinatura por desenho em canvas (touch), data e local preenchidos automaticamente, registro de IP e hora.
+```bash
+php artisan test
+```
 
-## Upload de documentos (aba Documentos)
+26 testes das regras que não podem quebrar:
 
-Checklist admissional padrão, cada item com status (pendente, enviado, conferido, com pendência), upload de imagem ou PDF direto da câmera do celular, visualizador embutido e campo de observação do DP:
+- **`DocumentosTest`** — dígitos verificadores de CPF, CNPJ e PIS, sequências repetidas,
+  máscaras e normalização de telefone para o `wa.me`.
+- **`AdmissaoTest`** — formato `ADM nn/mm`, reinício da contagem a cada mês, sequenciais
+  acima de 99 e rejeição de entradas inválidas.
+- **`ChecklistTest`** — obrigatoriedade por função (CNH do manobrista), por sexo
+  (reservista), por estado civil e pelas faixas etárias do salário-família, incluindo os
+  limites de 6/7 e 14/15 anos; e o bloqueio da admissão com documento pendente.
 
-- Currículo
-- RG (frente e verso) ou RG digital
-- CPF
-- CTPS digital (print do app) ou CTPS física
-- Extrato/consulta do FGTS ou CTPS digital com vínculos
-- PIS/NIT
-- Título de eleitor
-- CNH (obrigatório para manobrista; opcional para os demais)
-- Certificado de reservista/alistamento militar (homens)
-- Comprovante de residência atualizado (aceitar conta de consumo, contrato ou nota fiscal em nome do candidato)
-- Certidão de casamento ou união estável
-- Certidão de nascimento dos filhos
-- RG/CPF dos filhos
-- Carteira de vacinação dos filhos até 6 anos (salário-família)
-- Comprovante de escolaridade/frequência escolar dos filhos de 7 a 14 anos (salário-família)
-- Certificado de escolaridade
-- Certificados de cursos (ex.: brigada de incêndio, controlador de acesso)
-- Foto 3x4
-- Exame admissional (ASO)
-- Comprovante de conta bancária ou chave PIX
+---
 
-O DP deve conseguir adicionar itens extras ao checklist de um candidato específico. O sistema só permite mover para “Admitido” quando todos os itens obrigatórios estiverem conferidos (admin pode forçar com justificativa).
+## Como está organizado
 
-## Entrevista (aba Entrevista)
+```
+app/
+  Suporte/            regras puras, testáveis sem banco
+    Documentos.php      CPF, CNPJ, PIS e máscaras
+    Admissao.php        numeração ADM nn/mm
+    Checklist.php       obrigatoriedade dos documentos
+  Servicos/
+    Pipeline.php        transições de etapa e geração do número ADM
+    GeradorFicha.php    ficha em PDF (dompdf)
+    GeradorDossie.php   dossiê único (FPDI + redução de imagens)
+    ArmazenamentoDocumentos.php   disco privado
+    Auditoria.php       log e registro de acessos
+  Http/Controllers/
+    FichaPublicaController.php    formulário do candidato (sem login)
+    CandidatoController.php       painel do DP
+    PdfController.php             ficha e dossiê
+    ArquivoController.php         download autenticado
+resources/views/
+  ficha/etapas/       as 8 etapas do formulário público
+  painel/abas/        as 5 abas da página do candidato
+  pdf/ficha.blade.php layout da ficha em PDF
+public/instalar.php   instalador para hospedagem sem SSH (apagar após usar)
+legacy-nextjs/        implementação anterior em Next.js (pode ser removida)
+```
 
-- Agendamento com data, hora, local (presencial na sede ou online), entrevistador, envio de confirmação por WhatsApp (link wa.me pré-preenchido) e e-mail.
-- Roteiro de entrevista configurável, com as observações que hoje o entrevistador anota à mão: pontualidade (horário de chegada), apresentação pessoal, comunicação, experiência na função, disponibilidade de horário e dias (inclusive domingos/feriados), restrição de horário por filhos menores, distância/tempo de deslocamento até o posto, possui CNH e experiência em estacionamento/manobra, conhecimento básico de informática, experiência militar ou em segurança, interesse em cursos.
-- Notas de 1 a 5 por critério, parecer final (aprovado / reprovado / banco de talentos), vaga(s) indicada(s), posto sugerido e campo de observações livres.
-- Registro de quem entrevistou, data e hora.
+### Decisões que valem registro
 
-## Informações Internas (aba do DP)
+- **Documentos fora da pasta pública.** Ficam em `storage/app/documentos/`, sem URL
+  direta. O download passa pela rota `/arquivos/{id}`, que exige sessão e registra quem
+  acessou — importante em hospedagem compartilhada.
+- **CPF e RG cifrados em repouso**, com a `APP_KEY` do Laravel. Guarde essa chave junto
+  com o backup do banco: sem ela os dados cifrados não voltam.
+- **Checklist copiado para o candidato** no cadastro. Mudar o checklist mestre depois
+  não altera processos em andamento, e o DP pode acrescentar itens avulsos.
+- **Regras separadas do banco.** `app/Suporte/` é código puro: dá para testar sem subir
+  PostgreSQL, e é o mesmo cálculo que alimenta a tela, o bloqueio da admissão e o aviso
+  no topo da página.
+- **Numeração ADM à prova de concorrência.** O par ano/mês/sequencial tem índice único;
+  se dois DPs admitirem ao mesmo tempo, um recebe erro de unicidade e a operação é
+  repetida com o próximo número.
+- **Imagens reduzidas antes de entrar no dossiê** (`DOSSIE_MAX_PX`). O php-fpm do plano
+  tem ~342 MB e um processo: embutir fotos de 12 MP em tamanho original estoura.
+- **Sem fila e sem worker.** `QUEUE_CONNECTION=sync` — a hospedagem não mantém processo
+  em segundo plano.
 
-Nome do supervisor, posto, escala, empresa contratante (uma das oito), acúmulo de função (sim/não e qual), base salarial, benefícios (vale-transporte, assiduidade, outros), data de início, data do treinamento/integração, número da admissão (ADM nn/mm, gerado automaticamente), responsável pela aprovação e assinatura digital do responsável.
+---
 
-## Saídas e integrações
+## Limitações conhecidas
 
-1. Geração da Ficha de Solicitação de Emprego completa em PDF, com o layout equivalente ao formulário em papel (logo do Grupo Real Serv no cabeçalho, seções na mesma ordem, assinaturas), para arquivo e impressão.
-1. Geração do dossiê de admissão em PDF único: ficha + todos os documentos enviados, na ordem do checklist, com capa e índice.
-1. Exportação dos dados admissionais em planilha (xlsx/csv) no layout que a contabilidade usa para lançar no eSocial: dados pessoais, documentos, endereço, dependentes, cargo, salário, escala, empresa, data de admissão.
-1. Relatórios: admissões por mês e por empresa, candidatos por etapa, tempo médio entre entrevista e admissão, documentos pendentes, banco de talentos por função e cidade.
-1. Log de auditoria de todas as alterações (quem, quando, o quê).
-
-## LGPD e segurança
-
-- Consentimento explícito do candidato registrado com data, hora e IP.
-- Dados sensíveis (CPF, RG, documentos) criptografados em repouso; links de download expiram.
-- Política de retenção configurável: candidatos reprovados/desistentes são anonimizados após X meses (padrão 6), salvo se marcados como banco de talentos.
-- Todos os acessos ao dossiê ficam registrados.
-- Não expor documentos em URLs públicas.
-
-## Entregáveis
-
-1. Modelo de dados (schema Prisma) com todas as entidades acima.
-1. Aplicação funcional com as telas: login, painel/kanban, lista de candidatos, detalhe do candidato (5 abas), formulário público do candidato (wizard), cadastros mestres, relatórios.
-1. Geração de PDF (ficha e dossiê) e exportação xlsx.
-1. Seed com as oito empresas, as funções, as escalas e o checklist padrão.
-1. README com instruções de instalação, variáveis de ambiente, deploy e um guia rápido para o RH.
-1. Testes básicos das regras críticas: validação de CPF, geração do número ADM, bloqueio de admissão com documentos pendentes, regras de obrigatoriedade por função.
-
-Comece apresentando o plano de arquitetura e o schema; aguarde minha aprovação antes de gerar o código. Depois implemente nesta ordem, mostrando o que foi feito ao fim de cada etapa:
-
-1. Login com usuário e senha (perfis admin, recrutador, DP) e painel de candidatos.
-1. Link público para o candidato preencher a ficha e anexar os documentos pelo celular.
-1. Tela do DP para visualizar ficha e documentos e gerar o PDF único do candidato.
-1. Entrevista e pipeline.
-1. Informações internas, numeração ADM e exportação para a contabilidade.
-1. Relatórios, LGPD e testes.
-
-A versão mínima utilizável é o resultado das etapas 1 a 3; entregue-a funcionando antes de avançar.
+- **PDFs modernos não entram no dossiê.** O FPDI gratuito só importa **PDF até a versão
+  1.4**; scans de celular, CTPS digital e sites do governo costumam sair em 1.5+. Esses
+  arquivos viram uma **página de aviso dentro do dossiê**, pedindo o reenvio como foto.
+  Duas saídas: orientar o envio em JPG (que é o natural no celular), ou licenciar o
+  [FPDI PDF-Parser](https://www.setasign.com/fpdi-pdf-parser) e instalar com
+  `composer require setasign/fpdi-pdf-parser` — **sem mudar código**, o FPDI passa a
+  usá-lo automaticamente.
+- **Capa e separadores do dossiê saem sem acento** ("Dossie de admissao"). São
+  desenhados pelo FPDF, cujas fontes internas não cobrem UTF-8. **A ficha em si — o
+  documento que vale — tem os acentos corretos**, porque é gerada pelo dompdf com
+  DejaVu Sans.
+- **Fotos em HEIC** (iPhone) são aceitas e podem ser baixadas, mas nem o navegador as
+  exibe nem entram no dossiê. A aba Documentos avisa o DP para pedir o reenvio.
+- **O logotipo é um bloco "RS" desenhado**, não a arte oficial.
+- **Confirmação de entrevista é semiautomática**: o sistema monta a mensagem e abre o
+  `wa.me`; o envio é manual.
+- **Sem envio de e-mail** (recuperação de senha, avisos). A troca de senha é feita pelo
+  administrador em Cadastros.

@@ -1,0 +1,266 @@
+{
+  "node": {
+    "00de70bd620e42131dbfb641d80d0ad9ada3d1268b": {
+      "workers": {
+        "app/login/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Flogin%2Factions.ts%22%2C%5B%7B%22id%22%3A%2200de70bd620e42131dbfb641d80d0ad9ada3d1268b%22%2C%22exportedName%22%3A%22sairAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%2C%7B%22id%22%3A%22601a5839752daf0bf39affd8948a0469e8073fe539%22%2C%22exportedName%22%3A%22entrarAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Flogin%2Factions.ts%22%2C%5B%7B%22id%22%3A%2200de70bd620e42131dbfb641d80d0ad9ada3d1268b%22%2C%22exportedName%22%3A%22sairAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%2C%7B%22id%22%3A%22601a5839752daf0bf39affd8948a0469e8073fe539%22%2C%22exportedName%22%3A%22entrarAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Flogin%2Factions.ts%22%2C%5B%7B%22id%22%3A%2200de70bd620e42131dbfb641d80d0ad9ada3d1268b%22%2C%22exportedName%22%3A%22sairAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%2C%7B%22id%22%3A%22601a5839752daf0bf39affd8948a0469e8073fe539%22%2C%22exportedName%22%3A%22entrarAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/login/page": "action-browser",
+        "app/painel/page": "rsc",
+        "app/painel/candidatos/[id]/page": "rsc"
+      },
+      "filename": "app/login/actions.ts",
+      "exportedName": "sairAction"
+    },
+    "601a5839752daf0bf39affd8948a0469e8073fe539": {
+      "workers": {
+        "app/login/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Flogin%2Factions.ts%22%2C%5B%7B%22id%22%3A%2200de70bd620e42131dbfb641d80d0ad9ada3d1268b%22%2C%22exportedName%22%3A%22sairAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%2C%7B%22id%22%3A%22601a5839752daf0bf39affd8948a0469e8073fe539%22%2C%22exportedName%22%3A%22entrarAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Flogin%2Factions.ts%22%2C%5B%7B%22id%22%3A%2200de70bd620e42131dbfb641d80d0ad9ada3d1268b%22%2C%22exportedName%22%3A%22sairAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%2C%7B%22id%22%3A%22601a5839752daf0bf39affd8948a0469e8073fe539%22%2C%22exportedName%22%3A%22entrarAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Flogin%2Factions.ts%22%2C%5B%7B%22id%22%3A%2200de70bd620e42131dbfb641d80d0ad9ada3d1268b%22%2C%22exportedName%22%3A%22sairAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%2C%7B%22id%22%3A%22601a5839752daf0bf39affd8948a0469e8073fe539%22%2C%22exportedName%22%3A%22entrarAction%22%2C%22filename%22%3A%22app%2Flogin%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/login/page": "action-browser",
+        "app/painel/page": "rsc",
+        "app/painel/candidatos/[id]/page": "rsc"
+      },
+      "filename": "app/login/actions.ts",
+      "exportedName": "entrarAction"
+    },
+    "4037a30f580724a2d4544d41028e69670cb86d01f1": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "removerArquivoAction"
+    },
+    "4082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "regerarLinkAction"
+    },
+    "6006e004cef881fb6987c8b88b5166317627e4aa59": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "adicionarItemChecklistAction"
+    },
+    "603ddfa2c8ad63cc041ad487e09cf97baca5af1740": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "agendarEntrevistaAction"
+    },
+    "60525db8c6e79238abe790faa4d6dc2eb9e73ec471": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "salvarInformacoesInternasAction"
+    },
+    "606a7aaacaa09d0962416b045744dd0bfd1abb2840": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "conferirDocumentoAction"
+    },
+    "607000e4f69f37201cfe1c542e2bd5577c844767a7": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "registrarEntrevistaAction"
+    },
+    "60e74a320e5c47b02b682bb49047dfc092b216e9c9": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "criarCandidatoAction"
+    },
+    "60f67c5971b171e4f2b7dfd2db6e65ec223e3dc259": {
+      "workers": {
+        "app/painel/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/painel/candidatos/[id]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fpainel%2Fcandidatos%2Factions.ts%22%2C%5B%7B%22id%22%3A%224037a30f580724a2d4544d41028e69670cb86d01f1%22%2C%22exportedName%22%3A%22removerArquivoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%224082232b46e0efe30b97e098d1c97c8dc5c4ec8e9e%22%2C%22exportedName%22%3A%22regerarLinkAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%226006e004cef881fb6987c8b88b5166317627e4aa59%22%2C%22exportedName%22%3A%22adicionarItemChecklistAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22603ddfa2c8ad63cc041ad487e09cf97baca5af1740%22%2C%22exportedName%22%3A%22agendarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260525db8c6e79238abe790faa4d6dc2eb9e73ec471%22%2C%22exportedName%22%3A%22salvarInformacoesInternasAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22606a7aaacaa09d0962416b045744dd0bfd1abb2840%22%2C%22exportedName%22%3A%22conferirDocumentoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%22607000e4f69f37201cfe1c542e2bd5577c844767a7%22%2C%22exportedName%22%3A%22registrarEntrevistaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260e74a320e5c47b02b682bb49047dfc092b216e9c9%22%2C%22exportedName%22%3A%22criarCandidatoAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260f67c5971b171e4f2b7dfd2db6e65ec223e3dc259%22%2C%22exportedName%22%3A%22moverEtapaAction%22%2C%22filename%22%3A%22app%2Fpainel%2Fcandidatos%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/painel/page": "action-browser",
+        "app/painel/candidatos/[id]/page": "action-browser"
+      },
+      "filename": "app/painel/candidatos/actions.ts",
+      "exportedName": "moverEtapaAction"
+    },
+    "6051fd07811fbd58cb1671df244e1c952a1d631ae1": {
+      "workers": {
+        "app/ficha/[token]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fficha%2F%5Btoken%5D%2Factions.ts%22%2C%5B%7B%22id%22%3A%226051fd07811fbd58cb1671df244e1c952a1d631ae1%22%2C%22exportedName%22%3A%22enviarDocumentoAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%22608372f324f7ac3d918d3686a277d9f1cb276335a4%22%2C%22exportedName%22%3A%22enviarFichaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260880add181c83b1c9c88ead393bc29de548ebc01a%22%2C%22exportedName%22%3A%22salvarEtapaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ficha/[token]/page": "action-browser"
+      },
+      "filename": "app/ficha/[token]/actions.ts",
+      "exportedName": "enviarDocumentoAction"
+    },
+    "608372f324f7ac3d918d3686a277d9f1cb276335a4": {
+      "workers": {
+        "app/ficha/[token]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fficha%2F%5Btoken%5D%2Factions.ts%22%2C%5B%7B%22id%22%3A%226051fd07811fbd58cb1671df244e1c952a1d631ae1%22%2C%22exportedName%22%3A%22enviarDocumentoAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%22608372f324f7ac3d918d3686a277d9f1cb276335a4%22%2C%22exportedName%22%3A%22enviarFichaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260880add181c83b1c9c88ead393bc29de548ebc01a%22%2C%22exportedName%22%3A%22salvarEtapaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ficha/[token]/page": "action-browser"
+      },
+      "filename": "app/ficha/[token]/actions.ts",
+      "exportedName": "enviarFichaAction"
+    },
+    "60880add181c83b1c9c88ead393bc29de548ebc01a": {
+      "workers": {
+        "app/ficha/[token]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fficha%2F%5Btoken%5D%2Factions.ts%22%2C%5B%7B%22id%22%3A%226051fd07811fbd58cb1671df244e1c952a1d631ae1%22%2C%22exportedName%22%3A%22enviarDocumentoAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%22608372f324f7ac3d918d3686a277d9f1cb276335a4%22%2C%22exportedName%22%3A%22enviarFichaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260880add181c83b1c9c88ead393bc29de548ebc01a%22%2C%22exportedName%22%3A%22salvarEtapaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ficha/[token]/page": "action-browser"
+      },
+      "filename": "app/ficha/[token]/actions.ts",
+      "exportedName": "salvarEtapaAction"
+    },
+    "7f6d30fc0807b1cbfd0d38e9a7727f0b60a2d27aa1": {
+      "workers": {
+        "app/ficha/[token]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2FAdmissao-realserv-%2Fsrc%2Fapp%2Fficha%2F%5Btoken%5D%2Factions.ts%22%2C%5B%7B%22id%22%3A%226051fd07811fbd58cb1671df244e1c952a1d631ae1%22%2C%22exportedName%22%3A%22enviarDocumentoAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%22608372f324f7ac3d918d3686a277d9f1cb276335a4%22%2C%22exportedName%22%3A%22enviarFichaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260880add181c83b1c9c88ead393bc29de548ebc01a%22%2C%22exportedName%22%3A%22salvarEtapaAction%22%2C%22filename%22%3A%22app%2Fficha%2F%5Btoken%5D%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ficha/[token]/page": "action-browser"
+      },
+      "filename": "app/ficha/[token]/actions.ts",
+      "exportedName": "FORMATOS_ACEITOS"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "/8TNHoIqs51hdVjV4R9QGBcTKFFGsVzkaGmKqlTozNg="
+}

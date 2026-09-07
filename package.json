@@ -1,0 +1,12 @@
+{
+  "name": "realserv-admissao-assets",
+  "private": true,
+  "type": "module",
+  "description": "Build do CSS. Rode no desenvolvimento; o resultado (public/css/app.css) vai versionado e o servidor não precisa de Node.",
+  "scripts": {
+    "css": "tailwindcss -i resources/css/app.css -o public/css/app.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
